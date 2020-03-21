@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Calculator</title>
+  <meta name="Brian Boylen" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+<div id="calculator">
+    <div id="display">
+        <div id="header">
+            Brian's Calculator
+        </div>
+        <div id="bar">
+            
+        </div>
+    </div>
+    <div id="buttons">
+        <button class="utility" id="clear" value="clear" onclick="clearCalc()">C</button>
+        <button class="utility" value="sign" onclick="sign()">+/-</button>
+        <button class="operator" value="+" onclick="operatorClick(this.value)">+</button>
+        <button class="operator" value="-" onclick="operatorClick(this.value)">-</button>
+
+        <button class="number" value="7" onclick="numberClick(this.value)">7</button>
+        <button class="number" value="8" onclick="numberClick(this.value)">8</button>
+        <button class="number" value="9" onclick="numberClick(this.value)">9</button>
+        <button class="operator" value="÷" onclick="operatorClick(this.value)">÷</button>
+
+        <button class="number" value="4" onclick="numberClick(this.value)">4</button>
+        <button class="number" value="5" onclick="numberClick(this.value)">5</button>
+        <button class="number" value="6" onclick="numberClick(this.value)">6</button>
+        <button class="operator" value="x" onclick="operatorClick(this.value)">x</button>
+
+        <button class="number" value="1" onclick="numberClick(this.value)">1</button>
+        <button class="number" value="2" onclick="numberClick(this.value)">2</button>
+        <button class="number" value="3" onclick="numberClick(this.value)">3</button>
+        <button class="utility" id="equals" value="equals" onclick="equalsClick()">=</button>
+
+        <button class="number" value="0" onclick="numberClick(this.value)">0</button>
+        <button class="utility" value="." onclick="decimalClick()">.</button>
+    </div>
+</div>
+
+<script>
+    const add = (a,b) => a + b;
+    const subtract = (a,b) => a - b;
+    const multiply = (a,b) => a * b;
+    const divide = (a,b) => a / b;
+    function operate(a,b,operator) {
+        switch (operator) {
+            case '+':
+                return add(a,b);
+            case '-':
+                return subtract(a,b);
+            case 'x':
+                return multiply(a,b);
+            case '÷':
+                return divide(a,b);
+        }
+    }
+    let firstNumber = [];
+    let operatorChoice = null;
+    let secondNumber = [];
+    let isResult = false;
+    let firstSign = "positive";
+    let secondSign = "positive";
+    let firstDecimal = "false";
+    let secondDecimal = "false";
+    function numberClick(number) {
+        if (firstNumber.length + secondNumber.length > 16) {
+            return;
+        }
+
+        if (isResult === true && operatorChoice) {
+            secondNumber.push(number);
+            document.getElementById("bar").innerHTML = firstNumber.join('') + operatorChoice + secondNumber.join('');
+            isResult = false;
+        } else if (isResult === true) {
+            firstNumber = [];
+            firstNumber.push(number);
+            document.getElementById("bar").innerHTML = firstNumber.join('');
+            isResult = false;
+        } else if (!operatorChoice) {
+            if (firstNumber.length > 7) {
+                return;
+            }
+            firstNumber.push(number);
+            document.getElementById("bar").innerHTML = firstNumber.join('');
+        } else {
+            if (secondNumber.length > 7) {
+                return;
+            }
+            secondNumber.push(number);
+            document.getElementById("bar").innerHTML = firstNumber.join('') + operatorChoice + secondNumber.join('');
+        }
+    }
+    function operatorClick(operator) {
+        if (firstNumber.length === 0 || (firstNumber.length === 1 && firstNumber[0] === "-")) {
+            return;
+        }
+        operatorChoice = operator;
+        document.getElementById("bar").innerHTML = firstNumber.join('') + operatorChoice + secondNumber.join('');
+    }
+    function equalsClick() {
+        if (operatorChoice === null || (operatorChoice && secondNumber.length === 1 && secondNumber[0] === "-")) {
+            return;
+        }
+        if (operatorChoice === "÷" && secondNumber === 0) {
+            document.getElementById("bar").innerHTML = "INFINITY";
+            firstNumber = [];
+            isResult = false;
+        } else {
+            let result = operate(Number(firstNumber.join('')),Number(secondNumber.join('')),operatorChoice);
+            if (!Number.isInteger(result)) {
+                result = result.toFixed(5);
+            }
+            document.getElementById("bar").innerHTML = result;
+            firstNumber = (''+result).split('');
+            isResult = true;
+        }
+        operatorChoice = null;
+        secondNumber = [];
+    }
+    function clearCalc() {
+        firstNumber = [];
+        secondNumber = [];
+        operatorChoice = null;
+        isResult = false;
+        document.getElementById("bar").innerHTML = '';
+        firstSign = "positive";
+        secondSign = "positive";
+        firstDecimal = "false";
+        secondDecimal = "false";
+    }
+    function sign() {
+        if (!operatorChoice) {
+            if (firstSign === "positive") {
+                firstNumber.unshift("-");
+                document.getElementById("bar").innerHTML = firstNumber.join('');
+                firstSign = "negative";
+            } else {
+                firstNumber.splice(0,1);
+                document.getElementById("bar").innerHTML = firstNumber.join('');
+                firstSign = "positive";
+            }
+        } else {
+            if (secondSign === "positive") {
+                secondNumber.unshift("-");
+                document.getElementById("bar").innerHTML = firstNumber.join('') + operatorChoice + secondNumber.join('');
+                secondSign = "negative";
+            } else {
+                secondNumber.splice(0,1);
+                document.getElementById("bar").innerHTML = firstNumber.join('') + operatorChoice + secondNumber.join('');
+                secondSign = "positive";
+            }    
+        }
+    }
+    function decimalClick() {
+        if (!operatorChoice) {
+            if (firstDecimal === "false") {
+                firstNumber.push(".");
+                document.getElementById("bar").innerHTML = firstNumber.join('');
+                firstDecimal = "true";
+            } else {
+                return;
+            }
+        } else {
+            if (secondDecimal === "false") {
+                secondNumber.push(".");
+                document.getElementById("bar").innerHTML = firstNumber.join('') + operatorChoice + secondNumber.join('');
+                secondDecimal = "true";
+            } else {
+                return;
+            }
+        }
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+#header {
+    text-align: center;
+    margin-top: 1vw;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+#calculator {
+    margin:auto;
+    margin-top: 2.5vw;
+    height: 32vw;
+    width: 25vw;
+    background-color: lightblue;
+    border: thick solid black;
+    border-radius: 10px;
+
+}
+#display {
+    height: 9vw;
+    text-align: center;
+    border-bottom: thick solid black;
+}
+
+#bar {
+    background-color:white;
+    height: 4vw;
+    width: 20vw;
+    margin-top: .5vw;
+    display: inline-block;
+    border: thick solid black;
+    border-radius: 10px;
+    text-align: right;
+    line-height: 4vw;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+}
+#buttons {
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 3px;
+    height: 20vw;
+    width: 23vw;
+    font-size: 100px;
+    margin-top: 1vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+
+button {
+    border-radius: 30px;
+    border: medium solid black;
+}
+
+button:hover {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0.5+0,0.5+100 */
+  background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 255, 255, 0.5)), color-stop(100%, rgba(255, 255, 255, 0.5)));
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%);
+  background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%);
+  background-image: -ms-linear-gradient(top, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%);
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%);
+  filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#80ffffff', endColorstr='#80ffffff', GradientType=0);
+}
+
+.operator {
+    background-color: darkgray;
+    font-size: 30px;
+}
+
+.number {
+    background-color: white;
+    font-size: 30px;
+}
+
+.number:hover {
+    background-color: lightgrey;
+}
+
+.utility {
+    font-size: 30px;
+}
+
+#clear {
+    background-color: tomato;
+}
+
+#equals {
+    background-color: lightgreen;
+}
